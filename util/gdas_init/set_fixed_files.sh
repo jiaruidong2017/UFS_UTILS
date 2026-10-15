@@ -34,15 +34,15 @@ ORO_NAME="${CTAR}.mx${OCNRES}_oro_data"
 # When using the v15/v16 tiled warm restart data as input to the chgres
 # step, the input grid orography is needed (there is no orography record
 # in the restart files). Since the restart data was created before the
-# latest orog version (20240917), need to use a previous version.
+# latest orog version (20231027), need to use a previous version.
 #---------------------------------------------------------------------------
 
 if [ "$machine" = 'ursa' ] ; then
-  FIX_ORO_INPUT=/scratch3/NCEPDEV/global/role.glopara/fix/orog/20240917
+  FIX_ORO_INPUT=/scratch3/NCEPDEV/global/role.glopara/fix/orog/20230615
 elif [ "$machine" = 'wcoss2' ] ; then
-  FIX_ORO_INPUT=/lfs/h2/emc/global/noscrub/emc.global/FIX/fix/orog/20240917
+  FIX_ORO_INPUT=/lfs/h2/emc/global/noscrub/emc.global/FIX/fix/orog/20230615
 elif [ "$machine" = 'gaeac6' ] ; then
-  FIX_ORO_INPUT=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/orog/20240917
+  FIX_ORO_INPUT=/gpfs/f6/drsa-precip3/world-shared/role.glopara/fix/orog/20230615
 else
   set +x
   echo ERROR machine $machine not supported.
