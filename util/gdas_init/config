@@ -82,7 +82,7 @@ CRES_ENKF=C96
 
 UFS_DIR=$PWD/../..
 
-OUTDIR=/lfs/h2/emc/stmp/$USER/gdas.init/output 
+OUTDIR=/lfs/h2/emc/stmp/$USER/gdas.init/output
 #---------------------------------------------------------
 # Dont touch anything below here.
 #---------------------------------------------------------
