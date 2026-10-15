@@ -54,18 +54,16 @@
 #                      Defaults to 'v17'.
 #
 #-----------------------------------------------------------
-CRES_HIRES=C384
-CRES_ENKF=C192
 
-EXTRACT_DIR=/scratch3/NCEPDEV/land/Jiarui.Dong/GlobalWorkflow/ICSDIRS/gdas.init/$CRES_HIRES$CRES_ENKF/input
-EXTRACT_DATA=yes
+EXTRACT_DIR=/lfs/h2/emc/stmp/$USER/gdas.init/input
+EXTRACT_DATA=no
 
 RUN_CHGRES=yes
 
-yy=2024
-mm=06
+yy=2022
+mm=01
 dd=01
-hh=00
+hh=06
 
 use_v16retro=no
 
@@ -77,12 +75,14 @@ OUTPUT_SFC_VERSION=v16
 
 LEVS=128
 
-CDUMP=gdas
+CDUMP=gfs
 
+CRES_HIRES=C192
+CRES_ENKF=C96
 
 UFS_DIR=$PWD/../..
 
-OUTDIR=/scratch3/NCEPDEV/land/Jiarui.Dong/GlobalWorkflow/ICSDIRS/gdas.init/$CRES_HIRES$CRES_ENKF/output
+OUTDIR=/lfs/h2/emc/stmp/$USER/gdas.init/output 
 #---------------------------------------------------------
 # Dont touch anything below here.
 #---------------------------------------------------------
