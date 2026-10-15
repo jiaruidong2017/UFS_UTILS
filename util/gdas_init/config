@@ -48,31 +48,41 @@
 #                or incomplete. So this option may not
 #                always work. Contact george.gayno@noaa.gov
 #                if you encounter problems.
+# FORCE_GFS_VER - When set, forces input data version (e.g., 'v16').
+#                 Useful for reading v16 input while writing v17 output.
+# OUTPUT_SFC_VERSION - Output surface file version format ('v16' or 'v17').
+#                      Defaults to 'v17'.
 #
 #-----------------------------------------------------------
+CRES_HIRES=C384
+CRES_ENKF=C192
 
-EXTRACT_DIR=/lfs/h2/emc/stmp/$USER/gdas.init/input
-EXTRACT_DATA=no
+EXTRACT_DIR=/scratch3/NCEPDEV/land/Jiarui.Dong/GlobalWorkflow/ICSDIRS/gdas.init/$CRES_HIRES$CRES_ENKF/input
+EXTRACT_DATA=yes
 
 RUN_CHGRES=yes
 
-yy=2022
-mm=01
+yy=2024
+mm=06
 dd=01
-hh=06
+hh=00
 
 use_v16retro=no
 
+# Force v16 input data version
+FORCE_GFS_VER=v16
+
+# Output surface file version (v16 or v17)
+OUTPUT_SFC_VERSION=v16
+
 LEVS=128
 
-CDUMP=gfs
+CDUMP=gdas
 
-CRES_HIRES=C192
-CRES_ENKF=C96
 
 UFS_DIR=$PWD/../..
 
-OUTDIR=/lfs/h2/emc/stmp/$USER/gdas.init/output
+OUTDIR=/scratch3/NCEPDEV/land/Jiarui.Dong/GlobalWorkflow/ICSDIRS/gdas.init/$CRES_HIRES$CRES_ENKF/output
 #---------------------------------------------------------
 # Dont touch anything below here.
 #---------------------------------------------------------
@@ -83,6 +93,10 @@ EXEC_DIR=$UFS_DIR/exec
 if [ "$use_v16retro" = "yes" ]; then
 
   gfs_ver=v16retro
+
+elif [ -n "$FORCE_GFS_VER" ]; then
+
+  gfs_ver=$FORCE_GFS_VER
 
 else
 
@@ -126,4 +140,5 @@ else
 fi
 
 export EXTRACT_DIR yy mm dd hh UFS_DIR OUTDIR CRES_HIRES CRES_ENKF
-export LEVS gfs_ver EXEC_DIR GDAS_INIT_DIR use_v16retro
+export LEVS gfs_ver EXEC_DIR GDAS_INIT_DIR use_v16retro OUTPUT_SFC_VERSION
+
