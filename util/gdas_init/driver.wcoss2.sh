@@ -139,6 +139,27 @@ if [ $RUN_CHGRES == yes ]; then
     TASKS_PER_NODE=18
     WALLT="0:45:00"
   fi
+
+  #---------------------------------------------------------------------------
+  # Select the appropriate chgres script based on input/output versions.
+  # If reading v16 input and writing v17 output, use run_v16_to_v17.chgres.sh
+  #---------------------------------------------------------------------------
+  if [ "$gfs_ver" = "v16" ] && [ "$OUTPUT_SFC_VERSION" = "v17" ]; then
+    CHGRES_SCRIPT="run_v16_to_v17.chgres.sh"
+  elif [ "$gfs_ver" = "v16" ]; then
+    CHGRES_SCRIPT="run_v16.chgres.sh"
+  elif [ "$gfs_ver" = "v15" ]; then
+    CHGRES_SCRIPT="run_v15.chgres.sh"
+  elif [ "$gfs_ver" = "v14" ]; then
+    CHGRES_SCRIPT="run_v14.chgres.sh"
+  elif [ "$gfs_ver" = "v16retro" ]; then
+    CHGRES_SCRIPT="run_v16retro.chgres.sh"
+  else
+    set +x
+    echo "FATAL ERROR: Unknown gfs_ver=$gfs_ver"
+    exit 1
+  fi
+
   NCPUS=${TASKS_PER_NODE}
   (( TASKS = NODES * TASKS_PER_NODE ))
   export APRUN="mpiexec -n $TASKS -ppn $TASKS_PER_NODE --cpu-bind core"
@@ -171,7 +192,7 @@ if [ $RUN_CHGRES == yes ]; then
       ;;
     v16)
       qsub -V -l select=${NODES}:ncpus=${NCPUS}:ompthreads=1:mem=${MEM} -l walltime=$WALLT -A $PROJECT_CODE -q $QUEUE \
-      -N chgres_${CDUMP} -o log.${CDUMP} -e log.${CDUMP} ${DEPEND} -- ${this_dir}/run_v16.chgres.sh ${CDUMP}
+      -N chgres_${CDUMP} -o log.${CDUMP} -e log.${CDUMP} ${DEPEND} -- ${this_dir}/${CHGRES_SCRIPT} ${CDUMP}
       ;;
   esac
 
@@ -224,7 +245,7 @@ if [ $RUN_CHGRES == yes ]; then
             ;;
           v16)
               qsub -V -l select=${NODES}:ncpus=${NCPUS}:ompthreads=1:mem=${MEM} -l walltime=$WALLT -A $PROJECT_CODE -q $QUEUE \
-             -N chgres_${MEMBER_CH} -o log.${MEMBER_CH} -e log.${MEMBER_CH} ${DEPEND} -- ${this_dir}/run_v16.chgres.sh ${MEMBER_CH}
+             -N chgres_${MEMBER_CH} -o log.${MEMBER_CH} -e log.${MEMBER_CH} ${DEPEND} -- ${this_dir}/${CHGRES_SCRIPT} ${MEMBER_CH}
             ;;
         esac
         MEMBER=$(( $MEMBER + 1 ))
