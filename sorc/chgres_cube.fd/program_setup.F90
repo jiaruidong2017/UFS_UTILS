@@ -837,9 +837,6 @@ end subroutine get_var_cond
      bb_target     = bb_statsgo_noahmp
      satdk  = satdk_statsgo_noahmp
      satpsi_target = satpsi_statsgo_noahmp
-     print*,'DONG:NoahMP: MAXSMC ',maxsmc_target
-     print*,'DONG:NoahMP: REFSMC ',refsmc_target
-     print*,'DONG:NoahMP: WLTSMC ',wltsmc_target
  end select
 
  deallocate(satdk, satdw)
@@ -913,10 +910,6 @@ end subroutine get_var_cond
    end if
 
  END DO
-
- print*,'DONG:Noah: MAXSMC ',MAXSMC
- print*,'DONG:Noah: REFSMC ',REFSMC
- print*,'DONG:Noah: WLTSMC ',WLTSMC
 
  end subroutine calc_soil_params
 
