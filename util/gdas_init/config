@@ -48,8 +48,6 @@
 #                or incomplete. So this option may not
 #                always work. Contact george.gayno@noaa.gov
 #                if you encounter problems.
-# FORCE_GFS_VER - When set, forces input data version (e.g., 'v16').
-#                 Useful for reading v16 input while writing v17 output.
 # OUTPUT_SFC_VERSION - Output surface file version format ('v16' or 'v17').
 #                      Defaults to 'v17'.
 #
@@ -67,11 +65,8 @@ hh=06
 
 use_v16retro=no
 
-# Force v16 input data version
-FORCE_GFS_VER=v16
-
 # Output surface file version (v16 or v17)
-OUTPUT_SFC_VERSION=v16
+OUTPUT_SFC_VERSION=v17
 
 LEVS=128
 
@@ -93,10 +88,6 @@ EXEC_DIR=$UFS_DIR/exec
 if [ "$use_v16retro" = "yes" ]; then
 
   gfs_ver=v16retro
-
-elif [ -n "$FORCE_GFS_VER" ]; then
-
-  gfs_ver=$FORCE_GFS_VER
 
 else
 

@@ -127,13 +127,10 @@ if [ $RUN_CHGRES == yes ]; then
     WALLT="0:20:00"
   fi
 
-  #---------------------------------------------------------------------------
   # Select the appropriate chgres script based on input/output versions.
-  # If reading v16 input and writing v17 output, use run_v16_to_v17.chgres.sh
-  #---------------------------------------------------------------------------
-  if [ "$gfs_ver" = "v16" ] && [ "$OUTPUT_SFC_VERSION" = "v17" ]; then
-    CHGRES_SCRIPT="run_v16_to_v17.chgres.sh"
-  elif [ "$gfs_ver" = "v16" ]; then
+  # Default: read v16 input and write v17 output.
+  CHGRES_SCRIPT="run_v16_to_v17.chgres.sh"
+  if [ "$gfs_ver" = "v16" ] && [ "$OUTPUT_SFC_VERSION" = "v16" ]; then
     CHGRES_SCRIPT="run_v16.chgres.sh"
   elif [ "$gfs_ver" = "v15" ]; then
     CHGRES_SCRIPT="run_v15.chgres.sh"
@@ -141,11 +138,11 @@ if [ $RUN_CHGRES == yes ]; then
     CHGRES_SCRIPT="run_v14.chgres.sh"
   elif [ "$gfs_ver" = "v16retro" ]; then
     CHGRES_SCRIPT="run_v16retro.chgres.sh"
-  else
-    set +x
-    echo "FATAL ERROR: Unknown gfs_ver=$gfs_ver"
-    exit 1
+  elif [ "$gfs_ver" = "v17" ]; then
+    CHGRES_SCRIPT="run_v17.chgres.sh"
   fi
+
+  echo "Using CHGRES_SCRIPT=${CHGRES_SCRIPT}"
 
   case $gfs_ver in
     v12 | v13)

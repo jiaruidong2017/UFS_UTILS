@@ -58,7 +58,7 @@
 !!                                    gaussian nemsio files
 !!                                 - "gfs_sigio" for spectral gfs
 !!                                    gfs sigio/sfcio files.
- character(len=25),  public      :: output_type="statsgo_noahmp" !< Output data type:
+ character(len=25),  public      :: output_soiltype="statsgo_noahmp" !< Output soil type:
 !!                                 - "statsgo_noah" for GFSv16 using Noah model
 !!                                 - default for GFSv17 using Noahmp model
  character(len=20),  public      :: external_model="GFS"  !< The model that the input data is derived from. Current 
@@ -203,7 +203,7 @@
                    minmax_vgfrc_from_climo, &
                    lai_from_climo, tg3_from_soil, &
                    regional, input_type, &
-                   output_type, &
+                   output_soiltype, &
                    external_model, &
                    wam_parm_file, &
                    atm_weight_file, tracers, &
@@ -272,7 +272,7 @@
  call mpi_bcast(tg3_from_soil,1,MPI_LOGICAL,0,MPI_COMM_WORLD,ierr)
  call mpi_bcast(regional,1,MPI_INTEGER,0,MPI_COMM_WORLD,ierr)
  call mpi_bcast(input_type,len(input_type),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
- call mpi_bcast(output_type,len(output_type),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
+ call mpi_bcast(output_soiltype,len(output_soiltype),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
  call mpi_bcast(external_model,len(external_model),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
  call mpi_bcast(wam_parm_file,len(wam_parm_file),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
  call mpi_bcast(atm_weight_file,len(atm_weight_file),MPI_CHARACTER,0,MPI_COMM_WORLD,ierr)
@@ -821,7 +821,7 @@ end subroutine get_var_cond
  smlow  = smlow_statsgo
  smhigh = smhigh_statsgo
 
- select case (trim(output_type))
+ select case (trim(output_soiltype))
    case ("statsgo_noah")
      maxsmc_target = maxsmc_statsgo_noah
      bb_target     = bb_statsgo_noah
